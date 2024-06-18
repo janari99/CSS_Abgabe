@@ -1,0 +1,6 @@
+  const data = req.body;
+  const backendUrl = 'https://beta.edge-ml.org';
+  const apiKey = '522b217f96c96837ba6ed58a4bfd8ccf';
+  const datasetName = 'orientationDataset';
+  const metadata = { key: 'value' };
+  const labelingLabel = 'deviceOrientation_label';
