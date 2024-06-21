@@ -63,53 +63,13 @@
   <br><br>
 </form>
 
+<p id="error-message"></p>
+
 <p id="orientation-data"></p>
 
-<script>
-let orientationData = [];
+<p id="motion-data"></p>
 
-document.getElementById('toggle-switch').addEventListener('change', function(event) {
-    if (event.target.checked) {
-        if (window.DeviceOrientationEvent) {
-            window.addEventListener('deviceorientation', handleOrientationEvent);
-        } else {
-            alert("Device Orientation API not supported.");
-        }
-    } else {
-        window.removeEventListener('deviceorientation', handleOrientationEvent);
-        console.log('Collected data:', orientationData);
-        downloadCSV();
-    }
-});
-
-function handleOrientationEvent(event) {
-    var alpha = event.alpha;
-    var beta = event.beta;
-    var gamma = event.gamma;
-
-    document.getElementById('orientation-data').innerHTML = 
-        'Alpha: ' + alpha + '<br>' + 
-        'Beta: ' + beta + '<br>' + 
-        'Gamma: ' + gamma;
-
-    orientationData.push({ alpha, beta, gamma, timestamp: new Date().toISOString() });
-}
-
-function downloadCSV() {
-    const header = Object.keys(orientationData[0]).join(',');
-    const rows = orientationData.map(obj => Object.values(obj).join(',')).join('\n');
-    const csvContent = `${header}\n${rows}`;
-
-    const blob = new Blob([csvContent], { type: 'text/csv' });
-    const url = window.URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'orientation_data.csv';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-}
-</script>
+<script type="module" src="logic.js"></script>
 
 </body>
 </html>
